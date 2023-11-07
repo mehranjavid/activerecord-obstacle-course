@@ -19,6 +19,7 @@ describe 'ActiveRecord Obstacle Course, Week 2' do
     # ------------------------------------------------------------
 
     # ------------------ Using ActiveRecord ----------------------
+    orders_of_user_3 = Order.where(user_id: @user_3.id)
     # Solution goes here
     # ------------------------------------------------------------
 
@@ -38,6 +39,7 @@ describe 'ActiveRecord Obstacle Course, Week 2' do
     # ------------------------------------------------------------
 
     # ------------------ Using ActiveRecord ----------------------
+    orders = Order.order(amount: :desc)
     # Solution goes here
     # ------------------------------------------------------------
 
@@ -57,6 +59,7 @@ describe 'ActiveRecord Obstacle Course, Week 2' do
     # ------------------------------------------------------------
 
     # ------------------ Using ActiveRecord ----------------------
+    orders = Order.order(amount: :asc)
     # Solution goes here
     # ------------------------------------------------------------
 
@@ -74,7 +77,7 @@ describe 'ActiveRecord Obstacle Course, Week 2' do
     # ----------------------- Using Ruby -------------------------
     items = Item.all.map { |item| item unless items_not_included.include?(item) }.compact
     # ------------------------------------------------------------
-
+    items = Item.where.not(id: items_not_included)
     # ------------------ Using ActiveRecord ----------------------
     # Solution goes here
     # ------------------------------------------------------------
@@ -88,9 +91,9 @@ describe 'ActiveRecord Obstacle Course, Week 2' do
 
     # ----------------------- Using Ruby -------------------------
     order = Order.find(@order_3.id)
-    grouped_items = order.items.sort_by { |item| item.name }
+    # grouped_items = order.items.sort_by { |item| item.name }
     # ------------------------------------------------------------
-
+    grouped_items = Order.find(@order_3.id).items.order(:name)
     # ------------------ Using ActiveRecord ----------------------
     # Solution goes here
     # ------------------------------------------------------------
@@ -108,6 +111,7 @@ describe 'ActiveRecord Obstacle Course, Week 2' do
 
     # ------------------ Using ActiveRecord ----------------------
     # Solution goes here
+    names = Item.pluck(:name)
     # ------------------------------------------------------------
 
     # Expectation
@@ -139,12 +143,12 @@ describe 'ActiveRecord Obstacle Course, Week 2' do
         order.items.map { |item| item.name }
       end
     end
-    
+
     names = names.flatten
     # ------------------------------------------------------------
 
     # ------------------ Using ActiveRecord ----------------------
-    # Solution goes here
+    names = Order.joins(:items).pluck(:name)
     # ------------------------------------------------------------
 
     # Expectation

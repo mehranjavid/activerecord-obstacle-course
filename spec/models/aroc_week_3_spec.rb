@@ -28,6 +28,7 @@ describe 'ActiveRecord Obstacle Course, Week 3' do
 
     # ------------------ Using ActiveRecord ----------------------
     # Solution goes here
+    users = User.joins(:order_items).where("order_items.item_id = #{@item_8.id}").distinct.pluck(:name)
     # ------------------------------------------------------------
 
     # Expectation
@@ -43,6 +44,7 @@ describe 'ActiveRecord Obstacle Course, Week 3' do
 
     # ------------------ Using ActiveRecord ----------------------
     # Solution goes here
+    names = Order.last.items.distinct.pluck(:name)
     # ------------------------------------------------------------
 
     # Expectation
@@ -67,6 +69,7 @@ describe 'ActiveRecord Obstacle Course, Week 3' do
 
     # ------------------ Using ActiveRecord ----------------------
     # Solution goes here
+    items_for_user_3_third_order =  Order.where(user_id: @user_3.id).offset(2).first.items.pluck(:name)
     # ------------------------------------------------------------
 
     # Expectation
@@ -80,6 +83,7 @@ describe 'ActiveRecord Obstacle Course, Week 3' do
 
     # ------------------ Using ActiveRecord ----------------------
     # Solution goes here
+    average = Order.average(:amount)
     # ------------------------------------------------------------
 
     # Expectation
@@ -91,12 +95,13 @@ describe 'ActiveRecord Obstacle Course, Week 3' do
     orders = Order.all.map do |order|
       order if order.user_id == @user_3.id
     end.select{|i| !i.nil?}
-    
+
     average = (orders.map(&:amount).inject(:+)) / (orders.count)
     # -----------------------------------------------------------
 
     # ------------------ Using ActiveRecord ----------------------
     # Solution goes here
+    average = Order.where(user_id: @user_3.id).average(:amount)
     # ------------------------------------------------------------
 
     # Expectation

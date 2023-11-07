@@ -18,6 +18,7 @@ describe 'ActiveRecord Obstacle Course, Week 4' do
 
     # ------------------ Using ActiveRecord ---------------------
     # Solution goes here
+    total_sales = Order.sum(:amount)
     # -----------------------------------------------------------
 
     # Expectation
@@ -34,6 +35,7 @@ describe 'ActiveRecord Obstacle Course, Week 4' do
 
     # ------------------ Using ActiveRecord ---------------------
     # Solution goes here
+    total_sales = User.joins(:orders).where.not(id: @user_2.id).sum(:amount)
     # -----------------------------------------------------------
 
     # Expectation
@@ -50,6 +52,7 @@ describe 'ActiveRecord Obstacle Course, Week 4' do
 
     # ------------------ Improved Solution ----------------------
     #  Solution goes here
+    orders = Order.joins(:items).where("items.id = #{@item_4.id}").distinct
     # -----------------------------------------------------------
 
     # Expectation
@@ -67,6 +70,7 @@ describe 'ActiveRecord Obstacle Course, Week 4' do
 
     # ------------------ Improved Solution ----------------------
     #  Solution goes here
+    orders = Order.joins(:items).where("user_id = #{@user_2.id} and items.id = #{@item_4.id}")
     # -----------------------------------------------------------
 
     # Expectation
@@ -89,6 +93,7 @@ describe 'ActiveRecord Obstacle Course, Week 4' do
 
     # ------------------ ActiveRecord Solution ----------------------
     # Solution goes here
+    ordered_items = Item.joins(:order_items).distinct.order(:name)
     # ---------------------------------------------------------------
 
     # Expectations
